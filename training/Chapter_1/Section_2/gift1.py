@@ -48,5 +48,7 @@ with open("gift1.out", 'w') as fOutput:
         fOutput.write(str(listOfFriends[i]) + " ")
         fOutput.write(str(int(MoneyOfFriends[i])) + "\n")
 
+
+
  
 
