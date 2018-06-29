@@ -25,11 +25,11 @@ for i in range(numOfBeads):
     BackConsecutive2 = 0
     FrontConsecutive1 = 0
     FrontConsecutive2 = 0
-    BeginningBead = False
+    BeginningBead = 99999999
     if currentColor == 'w':
         continue
     for n in range(i, ((numOfBeads-i)*-1), -1):
-        if n == BeginningBead:
+        if n == BeginningBead or n == ((numOfBeads-1-BeginningBead)*-1):
             ForceClose()
         if n == i:
             BeginningBead = n
@@ -44,7 +44,7 @@ for i in range(numOfBeads):
         else:
             break
     Twice = False
-    BeginningBead = False
+    BeginningBead = None
     currentColor = Beads[i]
     for e in range(i, (numOfBeads+i), 1):
         if e == BeginningBead:
@@ -68,5 +68,7 @@ for i in range(numOfBeads):
     if BackConsecutive2 + FrontConsecutive1-1 > total:
         total = BackConsecutive2 + FrontConsecutive1-1
 
+if total == 0:
+    total = numOfBeads
 with open("beads.out", 'w') as fOutput:
     fOutput.write(str(total) + "\n")
