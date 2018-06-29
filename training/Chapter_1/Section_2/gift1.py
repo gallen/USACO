@@ -9,6 +9,7 @@ with open("gift1.in") as fInput:
 NP = int(lines[0].strip())
 Friends = {}
 listOfFriends = []
+Money = 0
 
 #Friends = {x.strip() : 0 for x in lines[1: NP + 1]}
 #listOfFriends = [x.strip() : 0 for x in lines[1: NP + 1]]
@@ -29,7 +30,7 @@ for i in range(1, Total,1):
     elif checkedLine in Friends:
         Friends[checkedLine] += Money
     else:
-        Money, Recievers = [int(x) for x in checkedLine]
+        Money, Recievers = [int(x) for x in checkedLine.split()]
         if Money == 0 and Recievers == 0:
             Money = 0
         else:
