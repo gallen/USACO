@@ -3,6 +3,21 @@
  LANG: PYTHON3
  TASK: beads
 """
+
+class BeadsSection:
+    def __init__(self, color):
+        self.color = color
+        self.length = 0
+        self.next = None
+    def addOne(self):
+        self.length += 1
+    def setNext(self, beadsSection):
+        self.next = beadsSection
+
+BeadsRing = None
+
+
+
 with open("beads.in") as fInput:
     lines = fInput.readlines()
 
