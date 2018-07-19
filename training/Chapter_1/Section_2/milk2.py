@@ -22,27 +22,11 @@ def canMerge(span1, span2):
 def merge(span1, span2):
     return Timespan(min(span1.begin, span2.begin), max(span1.end, span2.end))
 
-
-def findFirstMerge():
-    global g_initTimeSpans
-    if len(g_initTimeSpans) <= 0:
-        return None
-    elif len(g_initTimeSpans) == 1:
-        ret = g_initTimeSpans[0]
-        g_initTimeSpans = []
-        return ret
-    else:
-        mergedSpan = g_initTimeSpans[0]
-        AlreadyChecked = [0]
-        for i in range(len(g_initTimeSpans)-1):
-            checkedIndex = i + 1
-            if canMerge(g_initTimeSpans[checkedIndex], mergedSpan):
-                mergedSpan = merge(g_initTimeSpans[checkedIndex], mergedSpan)
-                AlreadyChecked.append(checkedIndex)
-        g_initTimeSpans = [g_initTimeSpans[x] for x in range(len(g_initTimeSpans)) if x not in AlreadyChecked]
-        return mergedSpan
                 
-
+def mergeAll(mergeGroup):
+    begins = [x.begin for x in mergeGroup]
+    ends = [x.end for x in mergeGroup]
+    return Timespan(min(begins), max(ends))
 
 # Main program
 g_initTimeSpans = [] # initial time span
@@ -60,13 +44,30 @@ for i in range(1, Farmers+1, 1):
 
 # merge time spans
 # either keep g_mergedTimeSpans sorted or sort it at the end.
+for i in range(Farmers):
+    checkSpan = g_initTimeSpans[i]
+    newMergedTimeSpans = []
+    canMergeTimeSpans = [checkSpan]
+    for mSpan in g_mergedTimeSpans:
+        if canMerge(checkSpan, mSpan):
+            canMergeTimeSpans.append(mSpan)
+        else:
+            newMergedTimeSpans.append(mSpan)
+    if len(canMergeTimeSpans) > 1:
+        newMergedTimeSpans.append(mergeAll(canMergeTimeSpans))
+    else:
+        newMergedTimeSpans.append(checkSpan)
+    g_mergedTimeSpans = newMergedTimeSpans
+
+
+'''
 while(True):
     mergedSpan = findFirstMerge()
     if mergedSpan == None:
         break
     else:
         g_mergedTimeSpans.append(mergedSpan)
-
+'''
 
 g_mergedTimeSpans.sort(key = lambda x: x.begin)
 
