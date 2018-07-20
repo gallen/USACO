@@ -30,7 +30,7 @@ class TriTree:
         return tree
 
 def buildTree(num):
-    root = TriTree(None)
+    root = TriTree('')
     curTreeNodes = [root]  
 
     for n in num:
@@ -43,5 +43,22 @@ def buildTree(num):
         curTreeNodes = tempTreeNodes
     return root
 
+result = []
+
+def walkTree(tree, name):
+    if tree.first == None:
+        result.append(name)
+    else:
+        name1 = name + tree.value
+        name2 = str(name1)
+        name3 = str(name1)
+        walkTree(tree.first, name1)
+        walkTree(tree.second, name2)
+        walkTree(tree.third, name3)
+
+
 
 tree = buildTree(str(INPUT))
+walkTree(tree, '')
+result.sort()
+print(result)
